@@ -1,0 +1,19 @@
+{
+	"configurations": [
+		{
+			"name": "library",
+			"targetType": "sourceLibrary"
+		}
+	],
+	"description": "D bindings for ALSA (Advanced Linux Sound Architecture) libasound2 library.",
+	"importPaths": [
+		"src"
+	],
+	"libs-posix": [
+		"asound"
+	],
+	"license": "LGPL-2.1 or later",
+	"name": "libasound-d",
+	"targetType": "sourceLibrary",
+	"version": "2.0.0"
+}

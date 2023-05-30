@@ -1,0 +1,303 @@
+diff -ru src/libasound-orig/asoundef.d src/libasound/asoundef.d
+--- src/libasound-orig/asoundef.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/asoundef.d	2023-05-30 09:38:35.638915703 -0600
+@@ -27,7 +27,7 @@
+ 
+ module libasound.asoundef;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  * \defgroup Digital_Audio_Interface Constants for Digital Audio Interfaces
+diff -ru src/libasound-orig/conf.d src/libasound/conf.d
+--- src/libasound-orig/conf.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/conf.d	2023-05-30 09:38:35.638915703 -0600
+@@ -32,7 +32,7 @@
+ import libasound.input;
+ import libasound.output;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Config Configuration Interface
+@@ -42,9 +42,9 @@
+  */
+ 
+ /** \brief \c dlsym version for the config evaluate callback. */
+-enum SND_CONFIG_DLSYM_VERSION_EVALUATE = _dlsym_config_evaluate_001;
++// enum SND_CONFIG_DLSYM_VERSION_EVALUATE = _dlsym_config_evaluate_001;
+ /** \brief \c dlsym version for the config hook callback. */
+-enum SND_CONFIG_DLSYM_VERSION_HOOK = _dlsym_config_hook_001;
++// enum SND_CONFIG_DLSYM_VERSION_HOOK = _dlsym_config_hook_001;
+ 
+ /** \brief Configuration node type. */
+ enum _snd_config_type
+diff -ru src/libasound-orig/control.d src/libasound/control.d
+--- src/libasound-orig/control.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/control.d	2023-05-30 09:38:35.638915703 -0600
+@@ -34,7 +34,7 @@
+ import libasound.conf;
+ import libasound.global;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Control Control Interface
+@@ -44,7 +44,7 @@
+  */
+ 
+ /** dlsym version for interface entry callback */
+-enum SND_CONTROL_DLSYM_VERSION = _dlsym_control_001;
++// enum SND_CONTROL_DLSYM_VERSION = _dlsym_control_001;
+ 
+ /** IEC958 structure */
+ struct snd_aes_iec958
+diff -ru src/libasound-orig/error.d src/libasound/error.d
+--- src/libasound-orig/error.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/error.d	2023-05-30 09:38:35.638915703 -0600
+@@ -28,8 +28,9 @@
+ module libasound.error;
+ 
+ import core.stdc.stdio;
++import core.stdc.stdarg;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Error Error handling
+diff -ru src/libasound-orig/global.d src/libasound/global.d
+--- src/libasound-orig/global.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/global.d	2023-05-30 09:38:35.638915703 -0600
+@@ -29,7 +29,7 @@
+ 
+ import core.sys.posix.sys.select;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /* for timeval and timespec */
+ 
+@@ -67,11 +67,11 @@
+ extern __gshared snd_dlsym_link* snd_dlsym_start;
+ 
+ /** \hideinitializer \brief Helper macro for #SND_DLSYM_BUILD_VERSION. */
+-extern (D) string __SND_DLSYM_VERSION(T0, T1, T2)(auto ref T0 prefix, auto ref T1 name, auto ref T2 version)
++extern (D) string __SND_DLSYM_VERSION(T0, T1, T2)(auto ref T0 prefix, auto ref T1 name, auto ref T2 ver)
+ {
+     import std.conv : to;
+ 
+-    return "_" ~ to!string(prefix) ~ to!string(name) ~ to!string(version);
++    return "_" ~ to!string(prefix) ~ to!string(name) ~ to!string(ver);
+ }
+ 
+ /**
+@@ -82,7 +82,7 @@
+ /** \brief Return 'x' argument as string */
+ 
+ /** \brief Returns the version of a dynamic symbol as a string. */
+-alias SND_DLSYM_VERSION = __STRING;
++// alias SND_DLSYM_VERSION = __STRING;
+ 
+ int snd_dlpath (char* path, size_t path_len, const(char)* name);
+ void* snd_dlopen (const(char)* file, int mode, char* errbuf, size_t errbuflen);
+diff -ru src/libasound-orig/hwdep.d src/libasound/hwdep.d
+--- src/libasound-orig/hwdep.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/hwdep.d	2023-05-30 09:38:35.638915703 -0600
+@@ -31,7 +31,7 @@
+ import core.sys.posix.poll;
+ import core.sys.posix.unistd;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup HwDep Hardware Dependant Interface
+@@ -170,7 +170,7 @@
+ void snd_hwdep_dsp_image_set_name (snd_hwdep_dsp_image_t* obj, const(char)* name);
+ void snd_hwdep_dsp_image_set_image (snd_hwdep_dsp_image_t* obj, void* buffer);
+ void snd_hwdep_dsp_image_set_length (snd_hwdep_dsp_image_t* obj, size_t length);
+-enum SND_HWDEP_DLSYM_VERSION = _dlsym_hwdep_001;
++// enum SND_HWDEP_DLSYM_VERSION = _dlsym_hwdep_001;
+ enum SND_HWDEP_OPEN_READ = O_RDONLY;
+ enum SND_HWDEP_OPEN_WRITE = O_WRONLY;
+ enum SND_HWDEP_OPEN_DUPLEX = O_RDWR;
+diff -ru src/libasound-orig/input.d src/libasound/input.d
+--- src/libasound-orig/input.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/input.d	2023-05-30 09:38:35.638915703 -0600
+@@ -30,7 +30,7 @@
+ import core.stdc.stdio;
+ import core.sys.posix.unistd;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Input Input Interface
+diff -ru src/libasound-orig/mixer.d src/libasound/mixer.d
+--- src/libasound-orig/mixer.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/mixer.d	2023-05-30 09:38:35.642915769 -0600
+@@ -33,7 +33,7 @@
+ import libasound.control;
+ import libasound.pcm;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Mixer Mixer Interface
+diff -ru src/libasound-orig/output.d src/libasound/output.d
+--- src/libasound-orig/output.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/output.d	2023-05-30 09:38:35.642915769 -0600
+@@ -28,8 +28,9 @@
+ module libasound.output;
+ 
+ import core.stdc.stdio;
++import core.stdc.stdarg;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Output Output Interface
+diff -ru src/libasound-orig/pcm.d src/libasound/pcm.d
+--- src/libasound-orig/pcm.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/pcm.d	2023-05-30 09:38:35.646915836 -0600
+@@ -36,7 +36,7 @@
+ import libasound.global;
+ import libasound.output;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup PCM PCM Interface
+@@ -45,7 +45,7 @@
+  */
+ 
+ /** dlsym version for interface entry callback */
+-enum SND_PCM_DLSYM_VERSION = _dlsym_pcm_001;
++// enum SND_PCM_DLSYM_VERSION = _dlsym_pcm_001;
+ 
+ /** PCM generic info container */
+ struct _snd_pcm_info;
+diff -ru src/libasound-orig/rawmidi.d src/libasound/rawmidi.d
+--- src/libasound-orig/rawmidi.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/rawmidi.d	2023-05-30 09:38:35.646915836 -0600
+@@ -34,7 +34,7 @@
+ import libasound.conf;
+ import libasound.global;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup RawMidi RawMidi Interface
+@@ -43,7 +43,7 @@
+  */
+ 
+ /** dlsym version for interface entry callback */
+-enum SND_RAWMIDI_DLSYM_VERSION = _dlsym_rawmidi_001;
++// enum SND_RAWMIDI_DLSYM_VERSION = _dlsym_rawmidi_001;
+ 
+ /** RawMidi information container */
+ struct _snd_rawmidi_info;
+diff -ru src/libasound-orig/seq.d src/libasound/seq.d
+--- src/libasound-orig/seq.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/seq.d	2023-05-30 09:38:35.646915836 -0600
+@@ -35,7 +35,7 @@
+ import libasound.seq_event;
+ import libasound.timer;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Sequencer MIDI Sequencer
+@@ -45,7 +45,7 @@
+  */
+ 
+ /** dlsym version for interface entry callback */
+-enum SND_SEQ_DLSYM_VERSION = _dlsym_seq_001;
++// enum SND_SEQ_DLSYM_VERSION = _dlsym_seq_001;
+ 
+ /** Sequencer handle */
+ struct _snd_seq;
+diff -ru src/libasound-orig/seq_event.d src/libasound/seq_event.d
+--- src/libasound-orig/seq_event.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/seq_event.d	2023-05-30 09:38:35.646915836 -0600
+@@ -27,7 +27,7 @@
+ 
+ module libasound.seq_event;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup SeqEvents Sequencer Event Definitions
+diff -ru src/libasound-orig/seqmid.d src/libasound/seqmid.d
+--- src/libasound-orig/seqmid.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/seqmid.d	2023-05-30 09:38:35.650915904 -0600
+@@ -32,7 +32,7 @@
+ import libasound.seq;
+ import libasound.seq_event;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup SeqMiddle Sequencer Middle Level Interface
+diff -ru src/libasound-orig/seq_midi_event.d src/libasound/seq_midi_event.d
+--- src/libasound-orig/seq_midi_event.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/seq_midi_event.d	2023-05-30 09:38:35.650915904 -0600
+@@ -31,7 +31,7 @@
+ 
+ import libasound.seq_event;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup MIDI_Event Sequencer event <-> MIDI byte stream coder
+diff -ru src/libasound-orig/timer.d src/libasound/timer.d
+--- src/libasound-orig/timer.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/timer.d	2023-05-30 09:38:35.650915904 -0600
+@@ -34,7 +34,7 @@
+ import libasound.conf;
+ import libasound.global;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ /**
+  *  \defgroup Timer Timer Interface
+@@ -43,9 +43,9 @@
+  */
+ 
+ /** dlsym version for interface entry callback */
+-enum SND_TIMER_DLSYM_VERSION = _dlsym_timer_001;
++// enum SND_TIMER_DLSYM_VERSION = _dlsym_timer_001;
+ /** dlsym version for interface entry callback */
+-enum SND_TIMER_QUERY_DLSYM_VERSION = _dlsym_timer_query_001;
++// enum SND_TIMER_QUERY_DLSYM_VERSION = _dlsym_timer_query_001;
+ 
+ /** timer identification structure */
+ struct _snd_timer_id;
+diff -ru src/libasound-orig/ver.d src/libasound/ver.d
+--- src/libasound-orig/ver.d	2023-05-30 09:38:31.614848370 -0600
++++ src/libasound/ver.d	2023-05-30 09:38:35.650915904 -0600
+@@ -2,9 +2,9 @@
+  *  version.h
+  */
+ 
+-module libasound.version;
++module libasound.ver;
+ 
+-extern (C):
++extern (C) @nogc nothrow:
+ 
+ enum SND_LIB_MAJOR = 1; /**< major number of library version */
+ enum SND_LIB_MINOR = 2; /**< minor number of library version */

@@ -1,0 +1,117 @@
+diff -ru headers-orig/conf.h headers/conf.h
+--- headers-orig/conf.h	2023-05-30 08:06:18.094782184 -0600
++++ headers/conf.h	2023-05-29 13:01:04.091382618 -0600
+@@ -28,6 +28,9 @@
+ #ifndef __ALSA_CONF_H
+ #define __ALSA_CONF_H
+ 
++#include "input.h"
++#include "output.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/control.h headers/control.h
+--- headers-orig/control.h	2023-05-30 08:06:18.094782184 -0600
++++ headers/control.h	2023-05-29 13:04:00.924587573 -0600
+@@ -28,6 +28,9 @@
+ #ifndef __ALSA_CONTROL_H
+ #define __ALSA_CONTROL_H
+ 
++#include "conf.h"
++#include "global.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/mixer.h headers/mixer.h
+--- headers-orig/mixer.h	2023-05-30 08:06:18.094782184 -0600
++++ headers/mixer.h	2023-05-29 13:05:01.785348023 -0600
+@@ -28,6 +28,9 @@
+ #ifndef __ALSA_MIXER_H
+ #define __ALSA_MIXER_H
+ 
++#include "control.h"
++#include "pcm.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/pcm.h headers/pcm.h
+--- headers-orig/pcm.h	2023-05-30 08:06:18.102782266 -0600
++++ headers/pcm.h	2023-05-29 13:05:48.555090005 -0600
+@@ -29,6 +29,10 @@
+ #ifndef __ALSA_PCM_H
+ #define __ALSA_PCM_H
+ 
++#include "conf.h"
++#include "global.h"
++#include "timer.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/rawmidi.h headers/rawmidi.h
+--- headers-orig/rawmidi.h	2023-05-30 08:06:18.102782266 -0600
++++ headers/rawmidi.h	2023-05-29 13:06:19.805683602 -0600
+@@ -28,6 +28,9 @@
+ #ifndef __ALSA_RAWMIDI_H
+ #define __ALSA_RAWMIDI_H
+ 
++#include "conf.h"
++#include "timer.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/seq.h headers/seq.h
+--- headers-orig/seq.h	2023-05-30 08:06:18.106782307 -0600
++++ headers/seq.h	2023-05-29 13:26:47.086453015 -0600
+@@ -29,6 +29,10 @@
+ #ifndef __ALSA_SEQ_H
+ #define __ALSA_SEQ_H
+ 
++#include "conf.h"
++#include "seq_event.h"
++#include "timer.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/seqmid.h headers/seqmid.h
+--- headers-orig/seqmid.h	2023-05-30 08:06:18.106782307 -0600
++++ headers/seqmid.h	2023-05-29 13:08:38.520302206 -0600
+@@ -28,6 +28,8 @@
+ #ifndef __ALSA_SEQMID_H
+ #define __ALSA_SEQMID_H
+ 
++#include "seq.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/seq_midi_event.h headers/seq_midi_event.h
+--- headers-orig/seq_midi_event.h	2023-05-30 08:06:18.106782307 -0600
++++ headers/seq_midi_event.h	2023-05-29 13:09:00.431565609 -0600
+@@ -28,6 +28,8 @@
+ #ifndef __ALSA_SEQ_MIDI_EVENT_H
+ #define __ALSA_SEQ_MIDI_EVENT_H
+ 
++#include "seq_event.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -ru headers-orig/timer.h headers/timer.h
+--- headers-orig/timer.h	2023-05-30 08:06:18.106782307 -0600
++++ headers/timer.h	2023-05-29 13:09:12.411174551 -0600
+@@ -28,6 +28,9 @@
+ #ifndef __ALSA_TIMER_H
+ #define __ALSA_TIMER_H
+ 
++#include "global.h"
++#include "conf.h"
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
