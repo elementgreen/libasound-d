@@ -44,14 +44,14 @@ memset(port_info, 0, snd_seq_port_info_sizeof());
 ## License
 
 ALSA library and these bindings are licensed under the terms of LGPL-2.1 or later.
-See the file COPYING for more details.
+See the file LICENSE for more details.
 
 ## Authors
 
 libasound2 has several authors, including:
-Jaroslav Kysela <perex@perex.cz>
-Abramo Bagnara <abramo@alsa-project.org>
-Takashi Iwai <tiwai@suse.de>
+- Jaroslav Kysela <perex@perex.cz>
+- Abramo Bagnara <abramo@alsa-project.org>
+- Takashi Iwai <tiwai@suse.de>
 
 See libasound2 sources for more details.
 
